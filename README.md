@@ -193,7 +193,7 @@ The smoke test checks, on CPU:
 
 ## License
 
-The code is released under the MIT License ([LICENSE](LICENSE)). The bundled G1 robot
+The code is released under the MIT License ([LICENSE.txt](LICENSE.txt)). The bundled G1 robot
 model is derived from Unitree's G1 description (BSD 3-Clause) and ASAP's 23-DoF G1
 description (MIT); see [NOTICE](NOTICE).
 
