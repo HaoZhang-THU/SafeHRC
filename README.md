@@ -63,6 +63,8 @@ SCENE=<name> bash train.sh all     # the same five arms on another scene
 bash eval.sh results/<scene>_sage_seed1_<date>   # deployment evaluation of models/iter_200.pt
 ```
 
+The same checkpoints also run in MuJoCo, without Isaac Lab; see [sim2sim/README.md](sim2sim/README.md).
+
 Each run writes `results/<scene>_<arm>_seed1_<date>/`:
 
 | Path | Contents |
@@ -116,6 +118,7 @@ isaac_sage/
   assets/policy_waist_tracking_g1_23dof.pt       frozen waist-tracking whole-body controller (TorchScript)
   assets/init/phase1_init.pt                     phase-1 initialisation (see below)
   scenes/*.json                                  scene files (walls, path, spawn poses)
+sim2sim/           MuJoCo version of the task: evaluates train.sh checkpoints outside Isaac Lab (see sim2sim/README.md)
 ```
 
 ## Task

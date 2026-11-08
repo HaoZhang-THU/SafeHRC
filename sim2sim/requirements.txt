@@ -1,0 +1,5 @@
+mujoco==3.4.0
+numpy==2.4.6
+torch==2.14.1
+imageio==2.38.1
+imageio-ffmpeg==0.6.0

@@ -11,6 +11,12 @@ isaac_sage/assets/g1/g1_29dof_anneal_23dof_palmup.usd
     (https://github.com/unitreerobotics/unitree_ros, BSD 3-Clause License) via the
     23-DoF G1 description of ASAP (https://github.com/LeCAR-Lab/ASAP, MIT License).
 
+sim2sim/assets/g1/g1_23dof_palmup.urdf, sim2sim/assets/g1/g1_23dof_palmup.xml, sim2sim/assets/g1/meshes/
+    Unitree G1 humanoid model (29-DoF G1 with 23 actuated joints) for MuJoCo, as URDF with its meshes
+    and the MJCF converted from it, with both hand links turned 180 deg about their x axis (palms up).
+    Derived from the Unitree G1 description (https://github.com/unitreerobotics/unitree_ros, BSD 3-Clause
+    License) via the 23-DoF G1 description of ASAP (https://github.com/LeCAR-Lab/ASAP, MIT License).
+
 ------------------------------------------------------------------------------
 unitree_ros license
 ------------------------------------------------------------------------------
