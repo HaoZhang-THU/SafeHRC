@@ -13,7 +13,7 @@ on safe and stable human–robot collaboration.
 ## Demos
 
 <!-- HALO preview: final_teaser.mp4, source excerpts 1–5 s, 18–22 s and 48–52 s.
-     SAGE simulation: maze_audit.mp4, Figure 6 on the project page, full sequence.
+     SAGE simulation: maze_audit.mp4 (Figure 6 on the project page) followed by MuJoCo sim2sim runs, full sequence.
      Both previews retain source playback speed and on-video speed labels. -->
 <table>
   <tr>
@@ -30,8 +30,8 @@ on safe and stable human–robot collaboration.
       <sub><b>SAGE · Scenario 2:</b> Spatially confined transport — octagonal table and human-partner variation</sub>
     </td>
     <td align="center" valign="top" width="25%">
-      <a href="https://yisen03-explosion.github.io/sage/static/videos/maze_audit.mp4"><img src="docs/media/sage_simulation.gif" width="180" alt="SAGE simulation: cooperative board transport in the Isaac Lab Maze"></a><br>
-      <sub><b>SAGE · Simulation:</b> Cooperative transport in the Isaac Lab Maze, with trajectory and hard-tree decision traces. Source video at 10× speed.</sub>
+      <a href="docs/media/sage_simulation.gif"><img src="docs/media/sage_simulation.gif" width="180" alt="SAGE simulation: Isaac Lab Maze and MuJoCo sim2sim with a muscle-driven human model"></a><br>
+      <sub><b>SAGE · Simulation:</b> Isaac Lab Maze with trajectory and hard-tree decision traces, then MuJoCo sim2sim in Tilt Gate and Maze with a muscle-driven human model and two G1 humanoids. Source video at 10× speed.</sub>
     </td>
   </tr>
 </table>
