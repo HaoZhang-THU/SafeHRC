@@ -3,3 +3,4 @@ third_party/
 __pycache__/
 *.pyc
 *.egg-info/
+sim2sim/muscle_human/data/

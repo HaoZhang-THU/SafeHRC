@@ -5,13 +5,11 @@ import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Optional
-
 import numpy as np
 import torch
 import torch.nn.functional as F
 from torch import Tensor
 from torch.optim import Adam
-
 from .critic import JointCritic, TeamContextCritic, ValueNorm, huber_loss
 from .safety import FormationSafetyModel, RowSet, SafetyConfig, SafetyState
 from .sail import sail_penalty_map

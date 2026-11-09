@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Optional
-
 import torch
 from torch import Tensor
 
@@ -15,6 +14,7 @@ class SafetyConfig:
     board_length: float = 2.0
     board_width: float = 1.0
     robot_radius: float = 0.20
+    robot_radii: Optional[tuple] = None
     perimeter_samples: int = 5
     obstacle_margin: float = 0.10
     activation_distance: float = 1.0
@@ -160,8 +160,9 @@ class FormationSafetyModel:
         perimeter_offsets = torch.einsum("bij,pj->bpi", board_rot, perimeter)
         robot_offsets = state.robot_xy - state.board_xy.unsqueeze(1)
         point_offsets = torch.cat((perimeter_offsets, robot_offsets), dim=1)
-        radius = torch.cat((torch.zeros(perimeter_offsets.shape[1], device=device, dtype=dtype),
-                            torch.full((robot_offsets.shape[1],), cfg.robot_radius, device=device, dtype=dtype)))
+        robot_radius = (torch.tensor(cfg.robot_radii, device=device, dtype=dtype) if cfg.robot_radii is not None
+                        else torch.full((robot_offsets.shape[1],), cfg.robot_radius, device=device, dtype=dtype))
+        radius = torch.cat((torch.zeros(perimeter_offsets.shape[1], device=device, dtype=dtype), robot_radius))
         points = state.board_xy.unsqueeze(1) + point_offsets
         point_map = self.point_maps(vel_map, yaw_map, point_offsets)
         curv = curv_weight * point_offsets.norm(dim=-1)

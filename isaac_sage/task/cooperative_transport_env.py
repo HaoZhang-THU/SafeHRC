@@ -3,7 +3,6 @@ from __future__ import annotations
 import math
 import os
 import torch
-
 import isaaclab.sim as sim_utils
 from isaaclab.assets import Articulation, ArticulationCfg, RigidObject, RigidObjectCfg
 from isaaclab.envs import DirectMARLEnv, DirectMARLEnvCfg

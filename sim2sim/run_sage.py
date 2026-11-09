@@ -10,7 +10,6 @@ import sys
 import time
 from dataclasses import fields
 from pathlib import Path
-
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
@@ -33,6 +32,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--out", default=None)
     p.add_argument("--video", default=None, help="mp4 of episode 0")
     p.add_argument("--violation_tol", type=float, default=1e-4)
+    p.add_argument("--muscle_human", default=None, help="muscle-driven human checkpoint as carrier robot_2")
     return p.parse_args()
 
 
@@ -109,7 +109,10 @@ class Video:
             return
         self.cam.lookat[:] = env.board_pos + self.lookat
         self.renderer.update_scene(env.data, camera=self.cam, scene_option=self.opt)
-        self.writer.append_data(self.renderer.render())
+        rgb = self.renderer.render()
+        if hasattr(env, "render_overlay"):
+            rgb = env.render_overlay(self.renderer, self.cam, self.opt, rgb)
+        self.writer.append_data(rgb)
 
     def close(self) -> None:
         self.writer.close()
@@ -129,8 +132,20 @@ def run_episode(job: dict) -> dict:
     scene = json.loads(Path(job["scene_json"]).read_text())
     cfg = type("Cfg", (TaskCfg,), {})
     cfg.episode_length_s = float(a["episode_length_s"] or scene.get("episode_length_s", 300.0))
-    env = TeamCarryEnv(scene, cfg, seed=job["seed"])
+    if a["muscle_human"]:
+        from muscle_human.team import HUMAN_RADIUS, HumanTeamEnv
+
+        env = HumanTeamEnv(scene, str(Path(a["muscle_human"]).resolve()), cfg, seed=job["seed"])
+    else:
+        env = TeamCarryEnv(scene, cfg, seed=job["seed"])
     actor, obs_norm, safety, ck_cfg = load_policy(a["checkpoint"])
+    if a["muscle_human"]:
+        from dataclasses import replace
+
+        from isaac_sage.safety import FormationSafetyModel
+
+        r = safety.cfg.robot_radius
+        safety = FormationSafetyModel(replace(safety.cfg, robot_radii=(r, r, HUMAN_RADIUS)))
     variant = str(ck_cfg.get("variant", "?"))
     shield = (variant != "happo_tree") if a["shield"] == "auto" else (a["shield"] == "on")
     toggles = job["toggles"]
@@ -210,6 +225,8 @@ def run_episode(job: dict) -> dict:
             break
     if video is not None:
         video.close()
+    if hasattr(env, "close"):
+        env.close()
     n_hl, n_safe = max(st["n_hl"], 1.0), max(st["n_safe"], 1.0)
     row = {
         "episode": job["episode"], "pool_index": job["pool_index"], "wp": int(env.wp_reached),

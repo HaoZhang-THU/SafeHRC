@@ -4,10 +4,8 @@ import math
 import os
 import sys
 from pathlib import Path
-
 import torch
 from torch import Tensor
-
 from .safety import SafetyState
 
 TASK_PKG = "isaac_sage.task"

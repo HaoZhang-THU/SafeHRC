@@ -4,7 +4,6 @@ import argparse
 import json
 import math
 from pathlib import Path
-
 import numpy as np
 
 BOARD_LENGTH, BOARD_WIDTH = 2.0, 1.0

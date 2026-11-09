@@ -3,7 +3,6 @@ from __future__ import annotations
 import math
 import os
 from pathlib import Path
-
 import mujoco
 import numpy as np
 import torch
@@ -127,9 +126,9 @@ def build_model(obstacle_specs, cfg: TaskCfg = TaskCfg, n_robots: int = 3) -> mu
     spec.visual.headlight.ambient = [0.35, 0.35, 0.35]
     spec.visual.headlight.diffuse = [0.55, 0.55, 0.55]
 
-    tex = spec.add_texture(name="grid", type=mujoco.mjtTexture.mjTEXTURE_2D,
-                           builtin=mujoco.mjtBuiltin.mjBUILTIN_CHECKER, width=512, height=512,
-                           rgb1=[0.32, 0.34, 0.36], rgb2=[0.26, 0.28, 0.30])
+    spec.add_texture(name="grid", type=mujoco.mjtTexture.mjTEXTURE_2D,
+                     builtin=mujoco.mjtBuiltin.mjBUILTIN_CHECKER, width=512, height=512,
+                     rgb1=[0.32, 0.34, 0.36], rgb2=[0.26, 0.28, 0.30])
     spec.add_material(name="grid", texrepeat=[8, 8], reflectance=0.05).textures[
         mujoco.mjtTextureRole.mjTEXROLE_RGB] = "grid"
     spec.worldbody.add_light(pos=[0, 0, 6], dir=[0, 0, -1], diffuse=[0.8, 0.8, 0.8], castshadow=False)
@@ -263,7 +262,7 @@ class TeamCarryEnv:
         return np.array([rot(q, c) for c in self.corners_local]) + p
 
     def reset(self, pose: list | None = None, path: list | None = None) -> dict:
-        cfg, d, m = self.cfg, self.data, self.model
+        d, m = self.data, self.model
         mujoco.mj_resetData(m, d)
         xy0 = self.start_xy if pose is None else np.array(pose[:2], dtype=np.float64)
         yaw0 = 0.0 if pose is None else float(pose[2])
